@@ -1,4 +1,4 @@
-OWNER=inloopeu
+OWNER=novacloud
 IMAGE_NAME=devops
 QNAME=$(OWNER)/$(IMAGE_NAME)
 

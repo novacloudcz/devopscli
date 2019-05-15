@@ -46,4 +46,4 @@ _NOTE: image inloopx/cra-docker is used, you can find more info at [https://gith
 
 _NOTE2: images are tagged automatically, read more in [Docker image tagging](../docker-image-tagging.md)_
 
-_NOTE3: Image is built using https://github.com/inloop/devopscli which is our tool to ease the deployment tasks_
+_NOTE3: Image is built using https://github.com/novacloudcz/devopscli which is our tool to ease the deployment tasks_

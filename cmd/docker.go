@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/inloop/devopscli/tools"
+	"github.com/novacloudcz/devopscli/tools"
 
 	"github.com/inloop/goclitools"
 	"github.com/urfave/cli"

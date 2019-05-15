@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/inloop/devopscli/cmd"
+	"github.com/novacloudcz/devopscli/cmd"
 	"github.com/urfave/cli"
 )
 
