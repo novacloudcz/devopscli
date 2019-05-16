@@ -18,6 +18,7 @@ func main() {
 		cmd.GitlabCmd(),
 		cmd.DockerCmd(),
 		cmd.AWSCmd(),
+		cmd.SQLCmd(),
 	}
 
 	app.Run(os.Args)
