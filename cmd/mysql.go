@@ -12,7 +12,7 @@ import (
 
 func SQLCmd() cli.Command {
 	return cli.Command{
-		Name: "sql",
+		Name: "mysql",
 		Subcommands: []cli.Command{
 			SQLDatabase(),
 		},
@@ -36,7 +36,10 @@ func SQLClear() cli.Command {
 	return cli.Command{
 		Name: "clear",
 		Action: func(c *cli.Context) error {
-			dbName := c.String("db")
+			dbName := c.Args().First()
+			if dbName == "" {
+				return cli.NewExitError("missing database name as first argument", 1)
+			}
 
 			db := tools.NewDBWithEnv()
 
