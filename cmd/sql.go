@@ -46,7 +46,7 @@ func SQLClearTables() cli.Command {
 			}
 
 			for _, table := range tables {
-				err := tableDrop(db, table)
+				err := tableDrop(db, dbName, table)
 				if err != nil {
 					return cli.NewExitError(err, 1)
 				}
@@ -82,8 +82,8 @@ func tableList(db *tools.DB, dbName string) ([]string, error) {
 	return tables, nil
 }
 
-func tableDrop(db *tools.DB, table string) error {
-	query := fmt.Sprintf("SET FOREIGN_KEY_CHECKS = 0;DROP TABLE `%s`;SET FOREIGN_KEY_CHECKS = 1;", table)
+func tableDrop(db *tools.DB, database, table string) error {
+	query := fmt.Sprintf("SET FOREIGN_KEY_CHECKS = 0;DROP TABLE `%s`.`%s`;SET FOREIGN_KEY_CHECKS = 1;", database, table)
 
 	_, err := db.Client().Exec(query)
 

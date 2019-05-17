@@ -44,7 +44,6 @@ func NewDBWithString(urlString string) *DB {
 	}
 
 	urlString = getConnectionString(*u)
-
 	db, err := sql.Open(u.Scheme, urlString)
 	if err != nil {
 		panic(err)
@@ -69,7 +68,9 @@ func getConnectionString(u url.URL) string {
 		u.Host = "tcp(" + u.Host + ")"
 	}
 	// for db clear-tables
-	u.Query().Set("multipleStatements", "true")
+	q := u.Query()
+	q.Set("multiStatements", "true")
+	u.RawQuery = q.Encode()
 	return strings.Replace(u.String(), u.Scheme+"://", "", 1)
 }
 func getDatabaseName(u *url.URL) string {
