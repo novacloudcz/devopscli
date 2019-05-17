@@ -83,7 +83,7 @@ func tableList(db *tools.DB, dbName string) ([]string, error) {
 }
 
 func tableDrop(db *tools.DB, table string) error {
-	query := fmt.Sprintf("DROP TABLE `%s`;", table)
+	query := fmt.Sprintf("SET FOREIGN_KEY_CHECKS = 0;DROP TABLE `%s`;SET FOREIGN_KEY_CHECKS = 1;", table)
 
 	_, err := db.Client().Exec(query)
 

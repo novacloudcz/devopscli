@@ -68,6 +68,8 @@ func getConnectionString(u url.URL) string {
 	if u.Scheme != "sqlite3" {
 		u.Host = "tcp(" + u.Host + ")"
 	}
+	// for db clear-tables
+	u.Query().Set("multipleStatements", "true")
 	return strings.Replace(u.String(), u.Scheme+"://", "", 1)
 }
 func getDatabaseName(u *url.URL) string {
