@@ -14,7 +14,7 @@ func MySQLCmd() cli.Command {
 	return cli.Command{
 		Name: "mysql",
 		Subcommands: []cli.Command{
-			SQLDatabase(),
+			MySQLDatabase(),
 		},
 	}
 }
