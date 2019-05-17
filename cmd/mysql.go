@@ -71,14 +71,13 @@ func SQLDump() cli.Command {
 			username := db.Username
 			password := db.Password
 			hostname := db.Hostname
-			filename := "dump.sql"
 
 			dbName := c.Args().First()
 			if dbName == "" {
 				dbName = db.Database
 			}
 
-			cmd := fmt.Sprintf("mysqldump -u %s -p%s -h %s %s > %s", username, password, hostname, dbName, filename)
+			cmd := fmt.Sprintf("mysqldump -u %s -p%s -h %s %s", username, password, hostname, dbName)
 			if err := goclitools.RunInteractive(cmd); err != nil {
 				return cli.NewExitError(err, 1)
 			}
@@ -99,14 +98,13 @@ func SQLImport() cli.Command {
 			username := db.Username
 			password := db.Password
 			hostname := db.Hostname
-			filename := "dump.sql"
 
 			dbName := c.Args().First()
 			if dbName == "" {
 				dbName = db.Database
 			}
 
-			cmd := fmt.Sprintf("mysql -u %s -p%s -h %s %s < %s", username, password, hostname, dbName, filename)
+			cmd := fmt.Sprintf("mysql -u %s -p%s -h %s %s", username, password, hostname, dbName)
 			if err := goclitools.RunInteractive(cmd); err != nil {
 				return cli.NewExitError(err, 1)
 			}
