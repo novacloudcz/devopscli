@@ -19,6 +19,7 @@ func main() {
 		cmd.DockerCmd(),
 		cmd.AWSCmd(),
 		cmd.SQLCmd(),
+		cmd.MySQLCmd(),
 	}
 
 	app.Run(os.Args)

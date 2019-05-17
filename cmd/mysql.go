@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/inloop/goclitools"
 
@@ -10,7 +9,8 @@ import (
 	"github.com/urfave/cli"
 )
 
-func SQLCmd() cli.Command {
+// MySQLCmd ...
+func MySQLCmd() cli.Command {
 	return cli.Command{
 		Name: "mysql",
 		Subcommands: []cli.Command{
@@ -19,49 +19,19 @@ func SQLCmd() cli.Command {
 	}
 }
 
-// SQLDB ...
-func SQLDatabase() cli.Command {
+// MySQLDatabase ...
+func MySQLDatabase() cli.Command {
 	return cli.Command{
 		Name: "database",
 		Subcommands: []cli.Command{
-			SQLClear(),
-			SQLDump(),
-			SQLImport(),
+			MySQLDump(),
+			MySQLImport(),
 		},
 	}
 }
 
-// SQLClear ...
-func SQLClear() cli.Command {
-	return cli.Command{
-		Name: "clear",
-		Action: func(c *cli.Context) error {
-			dbName := c.Args().First()
-			if dbName == "" {
-				return cli.NewExitError("missing database name as first argument", 1)
-			}
-
-			db := tools.NewDBWithEnv()
-
-			tables, err := tableList(db, dbName)
-			if err != nil {
-				return cli.NewExitError(err, 1)
-			}
-
-			for _, table := range tables {
-				err := tableDrop(db, table)
-				if err != nil {
-					return cli.NewExitError(err, 1)
-				}
-			}
-
-			return nil
-		},
-	}
-}
-
-// SQLDump ...
-func SQLDump() cli.Command {
+// MySQLDump ...
+func MySQLDump() cli.Command {
 	return cli.Command{
 		Name: "dump",
 		Action: func(c *cli.Context) error {
@@ -87,8 +57,8 @@ func SQLDump() cli.Command {
 	}
 }
 
-// SQLImport ...
-func SQLImport() cli.Command {
+// MySQLImport ...
+func MySQLImport() cli.Command {
 	return cli.Command{
 		Name: "import",
 		Action: func(c *cli.Context) error {
@@ -112,37 +82,4 @@ func SQLImport() cli.Command {
 			return nil
 		},
 	}
-}
-
-func tableList(db *tools.DB, dbName string) ([]string, error) {
-	tables := []string{}
-
-	if dbName == "" {
-		dbName = db.Database
-	}
-
-	query := fmt.Sprintf("SELECT table_name FROM information_schema.tables WHERE table_schema = '%s';", dbName)
-
-	rows, err := db.Client().Query(query)
-	if err != nil {
-		return tables, err
-	}
-
-	for rows.Next() {
-		var name string
-		if err := rows.Scan(&name); err != nil {
-			log.Fatal(err)
-		}
-		tables = append(tables, name)
-	}
-	defer rows.Close()
-	return tables, nil
-}
-
-func tableDrop(db *tools.DB, table string) error {
-	query := fmt.Sprintf("DROP TABLE `%s`;", table)
-
-	_, err := db.Client().Exec(query)
-
-	return err
 }
