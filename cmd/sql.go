@@ -31,7 +31,7 @@ func SQLDatabase() cli.Command {
 // SQLClearTables ...
 func SQLClearTables() cli.Command {
 	return cli.Command{
-		Name: "clear-tables",
+		Name: "clear",
 		Action: func(c *cli.Context) error {
 			dbName := c.Args().First()
 			if dbName == "" {
@@ -83,7 +83,7 @@ func tableList(db *tools.DB, dbName string) ([]string, error) {
 }
 
 func tableDrop(db *tools.DB, database, table string) error {
-	query := fmt.Sprintf("SET FOREIGN_KEY_CHECKS = 0;DROP TABLE `%s`.`%s`;SET FOREIGN_KEY_CHECKS = 1;", database, table)
+	query := fmt.Sprintf("SET FOREIGN_KEY_CHECKS = 0;DROP TABLE IF EXISTS `%s`.`%s`;DROP VIEW IF EXISTS `%s`.`%s`;SET FOREIGN_KEY_CHECKS = 1;", database, table, database, table)
 
 	_, err := db.Client().Exec(query)
 
