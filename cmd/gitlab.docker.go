@@ -82,6 +82,10 @@ func GitlabDockerBuildCmd() cli.Command {
 				Name:  "file",
 				Usage: "Name of the Dockerfile (Default is 'PATH/Dockerfile')",
 			},
+			cli.StringSliceFlag{
+				Name:  "build-arg",
+				Usage: "Build args passed to docker build call",
+			},
 		},
 		Action: func(c *cli.Context) error {
 
@@ -89,6 +93,7 @@ func GitlabDockerBuildCmd() cli.Command {
 			buildPath := c.String("path")
 			file := c.String("file")
 			tag := c.String("tag")
+			buildArgs := c.StringSlice("build-arg")
 
 			if tag == "" {
 				tag = tagForRefName(os.Getenv("CI_COMMIT_REF_NAME"), c.Bool("specific-tag"))
@@ -111,6 +116,10 @@ func GitlabDockerBuildCmd() cli.Command {
 			}
 			if c.Bool("no-cache") {
 				buildParams = append(buildParams, "--no-cache")
+			}
+
+			for _, arg := range buildArgs {
+				buildParams = append(buildParams, fmt.Sprintf("--build-arg %s", arg))
 			}
 
 			loginCmd := fmt.Sprintf("docker login -u %s -p %s %s", c.String("username"), c.String("password"), c.String("registry"))
