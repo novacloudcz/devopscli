@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/inloop/goclitools"
+	"github.com/novacloudcz/goclitools"
 
 	"github.com/novacloudcz/devopscli/tools"
 	"github.com/urfave/cli"

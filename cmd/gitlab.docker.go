@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/inloop/goclitools"
+	"github.com/novacloudcz/goclitools"
 	"github.com/urfave/cli"
 )
 

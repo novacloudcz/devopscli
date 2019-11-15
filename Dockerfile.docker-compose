@@ -1,0 +1,11 @@
+# building custom image due to https://github.com/xueshanf/docker-awscli/issues/6
+FROM alpine:3.5
+
+# https://serverfault.com/questions/772227/chmod-not-working-correctly-in-docker
+RUN apk add --update docker py-pip python-dev libffi-dev openssl-dev gcc libc-dev make ca-certificates
+RUN pip install docker-compose
+
+COPY bin/devops-alpine /usr/local/bin/devops
+RUN chmod +x /usr/local/bin/devops
+
+ENTRYPOINT []

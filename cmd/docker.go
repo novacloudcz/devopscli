@@ -6,7 +6,7 @@ import (
 
 	"github.com/novacloudcz/devopscli/tools"
 
-	"github.com/inloop/goclitools"
+	"github.com/novacloudcz/goclitools"
 	"github.com/urfave/cli"
 )
 

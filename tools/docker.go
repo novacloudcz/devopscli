@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/inloop/goclitools"
+	"github.com/novacloudcz/goclitools"
 )
 
 // DockerAutodetectHost detect docker host by iterating over possible options and checking if `docker info` works
@@ -35,5 +35,8 @@ func DockerCheckHost(host string) bool {
 		cmd = "docker info"
 	}
 	_, err := goclitools.Run(cmd)
+	// if os.Getenv("DEBUG") != "" {
+	// 	fmt.Printf("check %s, error: %v", string(data), err)
+	// }
 	return err == nil
 }
